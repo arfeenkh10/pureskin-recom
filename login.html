@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+    />
+    <title>PureSkin - Login</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background: url("skinbg13.webp") no-repeat center center fixed; /* Use the image directly */
+        background-size: cover; /* Ensures the image covers the whole screen */
+        background-blend-mode: overlay; /* Optional blending effect */
+      }
+
+      .container {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 30px;
+        border-radius: 20px;
+        width: 350px;
+        text-align: center;
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .container:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7);
+      }
+
+      .container h2 {
+        color: #fff;
+        margin-bottom: 20px;
+        font-family: "Courier New", Courier, monospace;
+        font-weight: bold;
+        letter-spacing: 2px;
+      }
+
+      .input-container {
+        position: relative;
+        margin-bottom: 20px;
+        width: 100%;
+      }
+
+      .input-container input {
+        width: 85%;
+        padding: 12px 30px 12px 28px;
+        border-radius: 8px;
+        border: none;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        font-size: 14px;
+        color: #9e6037;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .input-container input::placeholder {
+        color: #5e3d2e;
+      }
+
+      .input-container i {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #a27560;
+      }
+
+      .container button {
+        width: 85%;
+        padding: 12px;
+        margin: 15px 0;
+        border-radius: 8px;
+        border: none;
+        background-color: #5a3c2d;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        transition: background-color 0.3s, transform 0.3s ease;
+      }
+
+      .container button:hover {
+        background-color: #7f5044;
+        transform: translateY(-3px);
+      }
+
+      .container p {
+        margin-top: 20px;
+        color: #a97e48;
+      }
+
+      .container a {
+        color: #ff7b54;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .container a:hover {
+        text-decoration: underline;
+        color: #ff9372;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="loginContainer">
+      <h2 style="color: #5a3c2d">Login</h2>
+      <form id="loginForm">
+        <div class="input-container">
+          <input type="text" placeholder="Username" id="username" required />
+          <i class="fa fa-user"></i>
+        </div>
+        <div class="input-container">
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Password"
+            required
+          />
+          <i class="fas fa-user-lock"></i>
+        </div>
+        <button type="submit"><b>Log In</b></button>
+      </form>
+      <p>
+        <b>Don't have an account?</b>
+        <a href="signup.html">Sign Up</a>
+      </p>
+    </div>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+      import {
+        getDatabase,
+        ref,
+        set,
+      } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyBViS48aBal3NMELsphbGX37lQDNnJE3HI",
+        authDomain: "pureskin-contact-9860b.firebaseapp.com",
+        databaseURL:
+          "https://pureskin-contact-9860b-default-rtdb.firebaseio.com",
+        projectId: "pureskin-contact-9860b",
+        storageBucket: "pureskin-contact-9860b.appspot.com",
+        messagingSenderId: "524708633613",
+        appId: "1:524708633613:web:6061c63e9224d4a84b8944",
+        measurementId: "G-B60NEEE2CP",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const database = getDatabase(app);
+
+      document.getElementById("loginForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        const userRef = ref(database, "users/" + username);
+        set(userRef, {
+          username: username,
+          password: password,
+        })
+          .then(() => {
+            alert("User credentials saved successfully!");
+            window.location.href = "home.html";
+          })
+          .catch((error) => {
+            console.error("Error saving user credentials: ", error);
+          });
+      });
+    </script>
+  </body>
+</html>

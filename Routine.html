@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Natural Remedies - PureSkin</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #ffffff;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        background: url("images/skinbg4.jpg") no-repeat center center fixed;
+        backdrop-filter: blur;
+        background-size: cover;
+        background-blend-mode: overlay;
+      }
+      h1,
+      h2 {
+        color: #ffffff;
+      }
+      h3 {
+        color: #6b4226;
+      }
+      .header {
+        text-align: center;
+        padding: 20px;
+        position: relative;
+      }
+      .header h1 {
+        font-size: 2.5em;
+        margin: 0;
+      }
+      nav {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        display: flex;
+        align-items: center;
+      }
+      .back-button {
+        background-color: #3b5a2d;
+        color: #ffffff;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1em;
+        font-weight: bold;
+      }
+      .back-button:hover {
+        background-color: #244b20;
+      }
+      .content {
+        flex: 1;
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 20px;
+
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .content h2 {
+        font-size: 1.8em;
+        margin-bottom: 15px;
+      }
+      .remedy-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+      }
+      .remedy-section {
+        background: transparent;
+        backdrop-filter: blur(30px);
+        border: dashed white;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+      .remedy-section h3 {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+      }
+      .remedy-section p {
+        font-size: 0.9em;
+        line-height: 1.4;
+        margin-bottom: 10px;
+      }
+      .remedy-section ul {
+        font-size: 0.9em;
+        margin: 0;
+        padding-left: 15px;
+        list-style-type: disc;
+      }
+      details {
+        margin-bottom: 15px;
+        font-size: 0.9em;
+      }
+      summary {
+        cursor: pointer;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      .slideshow-container {
+        position: relative;
+        width: 80%;
+        max-width: 1200px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 20px auto;
+      }
+
+      @media (max-width: 768px) {
+        .content {
+          padding: 15px;
+        }
+        .remedy-grid {
+          grid-template-columns: 1fr;
+        }
+        h1,
+        h2 {
+          font-size: 1.6em;
+        }
+        .content h3 {
+          font-size: 1.3em;
+        }
+        .remedy-section ul {
+          font-size: 0.8em;
+        }
+      }
+      footer {
+        text-align: center;
+        padding: 4px;
+        color: #ffffff;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="header">
+      <img
+        src="pureskinlogo.jpg"
+        style="
+          height: 55px;
+          width: 55px;
+          position: absolute;
+          top: 10px;
+          left: 10px;
+          mix-blend-mode: multiply;
+        "
+      />
+      <h1 style="color: white">Natural Remedies for Healthy Skin</h1>
+      <nav>
+        <button class="back-button" onclick="window.location.href='home.html';">
+          Back
+        </button>
+      </nav>
+    </div>
+
+    <script>
+      let slideIndex = 2;
+      const slides = document.querySelectorAll(".slide");
+      const totalSlides = slides.length;
+
+      function showSlides() {
+        slides.forEach((slide) => {
+          slide.classList.remove("active");
+          slide.style.opacity = "0.4";
+          slide.style.transform = "scale(0.8)";
+        });
+
+        const prevIndex = (slideIndex - 1 + totalSlides) % totalSlides;
+        const nextIndex = (slideIndex + 1) % totalSlides;
+
+        slides[prevIndex].style.opacity = "0.4";
+        slides[nextIndex].style.opacity = "0.4";
+
+        slides[slideIndex].classList.add("active");
+        slides[slideIndex].style.opacity = "1";
+        slides[slideIndex].style.transform = "scale(1.2)";
+
+        const offset = -(slideIndex - 1) * 33.33;
+        document.querySelector(
+          ".slideshow"
+        ).style.transform = `translateX(${offset}%)`;
+      }
+
+      function nextSlide() {
+        slideIndex = (slideIndex + 1) % totalSlides;
+        showSlides();
+      }
+
+      function prevSlide() {
+        slideIndex = (slideIndex - 1 + totalSlides) % totalSlides;
+        showSlides();
+      }
+
+      showSlides();
+    </script>
+
+    <div class="content">
+      <div class="remedy-grid">
+        <div class="remedy-section">
+          <h2>DIY Face Masks</h2>
+          <details>
+            <summary>Honey and Oats Hydration Mask</summary>
+            <p>
+              Honey is a natural humectant that helps retain moisture, while
+              oats soothe and nourish dry skin. Here's a simple recipe:
+            </p>
+            <ul>
+              <li>2 tablespoons of honey</li>
+              <li>1 tablespoon of ground oats</li>
+              <li>1 teaspoon of olive oil (optional)</li>
+            </ul>
+            <p>
+              Mix the ingredients and apply to clean skin. Leave on for 15-20
+              minutes, then rinse with warm water.
+            </p>
+          </details>
+          <details>
+            <summary>Avocado and Yogurt Mask</summary>
+            <p>
+              This creamy mask is rich in nutrients and great for dry skin.
+              Here's how to make it:
+            </p>
+            <ul>
+              <li>1 ripe avocado</li>
+              <li>2 tablespoons of plain yogurt</li>
+            </ul>
+            <p>
+              Mash the avocado and mix with yogurt. Apply to your face and leave
+              for 15 minutes before rinsing.
+            </p>
+          </details>
+        </div>
+        <div class="remedy-section">
+          <h2>Natural Scrubs</h2>
+          <details>
+            <summary>Sugar and Coconut Oil Scrub</summary>
+            <p>
+              This scrub gently exfoliates while moisturizing your skin. Follow
+              this recipe:
+            </p>
+            <ul>
+              <li>1 cup of sugar</li>
+              <li>1/2 cup of coconut oil</li>
+            </ul>
+            <p>
+              Mix and massage onto damp skin in circular motions, then rinse
+              off.
+            </p>
+          </details>
+          <details>
+            <summary>Coffee Grounds Scrub</summary>
+            <p>Great for removing dead skin and boosting circulation:</p>
+            <ul>
+              <li>1/2 cup of coffee grounds</li>
+              <li>1/4 cup of coconut oil</li>
+            </ul>
+            <p>Combine and use on wet skin, then rinse.</p>
+          </details>
+        </div>
+        <div class="remedy-section">
+          <h2>Essential Oils for Skincare</h2>
+          <details>
+            <summary>Tea Tree Oil</summary>
+            <p>
+              Known for its antibacterial properties, tea tree oil can help
+              treat acne:
+            </p>
+            <ul>
+              <li>
+                Mix a few drops of tea tree oil with a carrier oil (like coconut
+                oil).
+              </li>
+              <li>Apply directly to blemishes using a cotton swab.</li>
+            </ul>
+          </details>
+          <details>
+            <summary>Lavender Oil</summary>
+            <p>Lavender oil is soothing and can help calm irritated skin:</p>
+            <ul>
+              <li>
+                Add a few drops of lavender oil to your moisturizer or carrier
+                oil.
+              </li>
+              <li>Apply it to the affected areas for relief.</li>
+            </ul>
+          </details>
+          <details>
+            <summary>Frankincense Oil</summary>
+            <p>
+              This oil is great for reducing the appearance of scars and stretch
+              marks:
+            </p>
+            <ul>
+              <li>Mix a few drops of frankincense oil with a carrier oil.</li>
+              <li>Massage it onto the scars or stretch marks daily.</li>
+            </ul>
+          </details>
+          <details>
+            <summary>Rosehip Oil</summary>
+            <p>
+              Rich in vitamins, rosehip oil is excellent for skin regeneration:
+            </p>
+            <ul>
+              <li>Apply rosehip oil directly to your skin.</li>
+              <li>Use it as part of your nighttime skincare routine.</li>
+            </ul>
+          </details>
+        </div>
+
+        <div class="remedy-section">
+          <h2>Moisturizers</h2>
+          <details>
+            <summary>Aloe Vera Gel</summary>
+            <p>
+              Aloe vera is excellent for hydrating and soothing the skin. Apply
+              fresh aloe gel directly to the skin.
+            </p>
+          </details>
+          <details>
+            <summary>Coconut Oil</summary>
+            <p>Perfect for sealing in moisture. Use as needed on dry areas.</p>
+          </details>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>&copy; 2024 PureSkin. All Rights Reserved.</p>
+    </footer>
+  </body>
+</html>

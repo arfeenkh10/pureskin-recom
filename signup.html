@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+    />
+    <title>PureSkin - Signup</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background: url("skinbg13.webp") no-repeat center center fixed;
+        background-size: cover;
+        background-blend-mode: overlay;
+      }
+
+      .container {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 30px;
+        border-radius: 20px;
+        width: 400px; /* Slightly wider for sign up */
+        text-align: center;
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .container:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7);
+      }
+
+      .container h2 {
+        color: #fff;
+        margin-bottom: 20px;
+        font-family: "Courier New", Courier, monospace;
+        font-weight: bold;
+        letter-spacing: 2px;
+      }
+
+      .input-container {
+        position: relative;
+        margin-bottom: 20px;
+        width: 100%;
+      }
+
+      .input-container input {
+        width: 85%;
+        padding: 12px 30px 12px 28px;
+        border-radius: 8px;
+        border: none;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        font-size: 14px;
+        color: #9e6037;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .input-container input::placeholder {
+        color: rgb(84, 56, 27);
+      }
+
+      .input-container i {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #a27560;
+      }
+
+      .container button {
+        width: 85%;
+        padding: 12px;
+        margin: 15px 0;
+        border-radius: 8px;
+        border: none;
+        background-color: #5a3c2d;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        transition: background-color 0.3s, transform 0.3s ease;
+      }
+
+      .container button:hover {
+        background-color: #7f5044;
+        transform: translateY(-3px);
+      }
+
+      .container p {
+        margin-top: 20px;
+        color: #a97e48;
+      }
+
+      .container a {
+        color: #ff7b54;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .container a:hover {
+        text-decoration: underline;
+        color: #ff9372;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="signupContainer">
+      <h2 style="color: #5a3c2d">Sign Up</h2>
+      <form id="signupForm">
+        <div class="input-container">
+          <input type="text" placeholder="Full Name" id="fullName" required />
+          <i class="fa fa-user"></i>
+        </div>
+        <div class="input-container">
+          <input type="email" id="email" placeholder="Email" required />
+          <i class="fas fa-envelope-open"></i>
+        </div>
+        <div class="input-container">
+          <input
+            type="password"
+            id="password"
+            placeholder="Create Password"
+            required
+          />
+          <i class="fas fa-user-lock"></i>
+        </div>
+        <div class="input-container">
+          <input
+            type="password"
+            id="confirmPassword"
+            placeholder="Confirm Password"
+            required
+          />
+          <i class="fas fa-user-lock"></i>
+        </div>
+        <button type="submit"><b>Sign Up</b></button>
+      </form>
+      <p>
+        <b>Already have an account?</b>
+        <a href="login.html">Log In</a>
+      </p>
+    </div>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+      import {
+        getDatabase,
+        ref,
+        set,
+      } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyAeDJ-fQdfRais9w6yhorXT-xWBWvuKbLM",
+        authDomain: "pureskin-signup.firebaseapp.com",
+        databaseURL: "https://pureskin-signup-default-rtdb.firebaseio.com",
+        projectId: "pureskin-signup",
+        storageBucket: "pureskin-signup.appspot.com",
+        messagingSenderId: "415986968544",
+        appId: "1:415986968544:web:46e7af8ff6ba0b09cc6d85",
+        measurementId: "G-T7XVCV6J90",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const database = getDatabase(app);
+
+      document.getElementById("signupForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const fullName = document.getElementById("fullName").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        const confirmPassword =
+          document.getElementById("confirmPassword").value;
+        if (password !== confirmPassword) {
+          alert("Passwords do not match!");
+          return;
+        }
+
+        const userRef = ref(database, "users/" + fullName);
+        set(userRef, {
+          fullName: fullName,
+          email: email,
+          password: password,
+        })
+          .then(() => {
+            alert("Sign up successful!");
+            window.location.href = "home.html";
+          })
+          .catch((error) => {
+            console.error("Error saving user credentials: ", error);
+          });
+      });
+    </script>
+  </body>
+</html>
