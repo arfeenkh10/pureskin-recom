@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+    />
+    <title>PureSkin - Register</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background: linear-gradient(
+            145deg,
+            rgba(46, 47, 49, 0.7),
+            rgba(59, 61, 64, 0.7)
+          ),
+          url("images/loginpagebg2.jpg") no-repeat center center fixed;
+        background-size: cover; 
+      }
+
+      .container {
+        background: linear-gradient(145deg, #3e4144, #474a4d);
+        padding: 30px;
+        box-shadow: 8px 8px 15px #1d1e1f, -8px -8px 15px #515557;
+        border-radius: 20px;
+        width: 350px;
+        text-align: center;
+      }
+
+      .container h2 {
+        color: white;
+        margin-bottom: 20px;
+        font-family: "Courier New", Courier, monospace;
+        font-weight: bold;
+      }
+
+      .input-container {
+        position: relative;
+        margin-bottom: 20px;
+        width: 100%;
+      }
+
+      .input-container input {
+        width: 85%;
+        padding: 12px 30px 12px 28px;
+        border-radius: 8px;
+        border: none;
+        background-color: #3c3f42;
+        color: white;
+        font-size: 14px;
+        box-shadow: inset 4px 4px 8px #2b2d2f, inset -4px -4px 8px #4a4d50;
+      }
+
+      .input-container input::placeholder {
+        color: #aaa;
+      }
+
+      .input-container i {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #aaa;
+      }
+
+      .container button {
+        width: 85%;
+        padding: 12px;
+        margin: 15px 0;
+        border-radius: 8px;
+        border: none;
+        background-color: #0b0c0d;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 4px 4px 10px #1a1b1c, -4px -4px 10px #606467;
+        transition: background-color 0.3s;
+      }
+
+      .container button:hover {
+        background-color: #606265;
+      }
+
+      .container p {
+        margin-top: 20px;
+        color: #f3ebeb;
+      }
+
+      .container a {
+        color: #fb0303;
+        text-decoration: none;
+      }
+
+      .container a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="signupContainer">
+      <h2>Register</h2>
+      <form action="aboutus2.html" method="POST">
+        <div class="input-container">
+          <input type="text" placeholder="Full Name" name="username" required />
+          <i class="fa fa-user"></i>
+        </div>
+        <div class="input-container">
+          <input type="email" name="email

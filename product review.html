@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skincare Product Reviews - PureSkin</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        color: #5a3c2d;
+        margin: 0;
+        padding: 0;
+        background: url("images/skinbg5.jpg") no-repeat center center fixed;
+        background-size: cover;
+        background-blend-mode: overlay;
+      }
+
+      .navbar {
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        backdrop-filter: transparent;
+
+        border: white;
+      }
+
+      .navbar a {
+        color: #ffffff;
+        text-decoration: none;
+        margin: 0 15px;
+        font-weight: bold;
+        padding: 30px;
+      }
+
+      .navbar a:hover {
+        text-decoration: underline;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+      }
+
+      .logo img {
+        height: 40px;
+        margin-right: 10px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 40px;
+        border-radius: 8px;
+      }
+
+      h1 {
+        color: #ffffff;
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 45px; /* Adjust the size as needed */
+      }
+
+      .filter-buttons {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+      }
+
+      .filter-button {
+        background-color: #e4bd88b2;
+        border: none;
+        color: #524b3f;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 1em;
+        border-radius: 5px;
+        margin: 5px;
+        transition: background-color 0.3s ease;
+      }
+
+      .back-button {
+        background-color: #5a3c2d;
+        color: #f4c8a2;
+        border: none;
+        padding: 7px 12px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1em;
+        font-weight: bold;
+      }
+
+      .back-button:hover {
+        background-color: #4b2d20;
+      }
+
+      .filter-button.show-all {
+        background-color: #d99572;
+      }
+
+      .filter-button:hover {
+        background-color: #8c6b5e;
+      }
+
+      .filter-button.show-all:hover {
+        background-color: #cca086;
+      }
+
+      .product-review {
+        background: transparent;
+        backdrop-filter: blur(40px);
+        border: dashed;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+
+      .product-review:hover {
+        transform: scale(1.05);
+      }
+
+      .product-review h3 {
+        margin-top: 0;
+      }
+
+      .rating {
+        font-size: 1.2em;
+        color: #f39c12;
+      }
+
+      .review-details {
+        display: none;
+      }
+
+      .review-details.show {
+        display: block;
+      }
+
+      footer {
+        backdrop-filter: transparent;
+        border: solid white;
+        color: #fffffe;
+        text-align: center;
+        padding: 20px;
+        border-top: 3px solid #c69c84;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+        box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      footer p {
+        margin: 0;
+        font-size: 0.9em;
+      }
+
+      @media (max-width: 768px) {
+        .navbar {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .navbar a {
+          margin: 5px 0;
+        }
+
+        .filter-buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .filter-button {
+          padding: 8px 15px;
+          font-size: 0.9em;
+        }
+
+        .product-review {
+          padding: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="logo">
+        <a href="index.html">
+          <img
+            src="pureskinlogo.jpg"
+            style="
+              height: 55px;
+              width: 55px;
+              position: absolute;
+              top: 2px;
+              left: 2px;
+              mix-blend-mode: multiply;
+            "
+        /></a>
+      </div>
+      <div>
+        <a href="home.html">Home</a>
+        <a href="contactus.html">Contact Us</a>
+        <a href="learnmore.html">Learn More</a>
+        <button class="back-button" onclick="window.location.href='home.html';">
+          Back
+        </button>
+      </div>
+    </div>
+
+    <div class="container">
+      <h1>Skincare Product Reviews</h1>
+      <div class="filter-buttons">
+        <button class="filter-button show-all" onclick="filterReviews('all')">
+          <strong>Show All</strong>
+        </button>
+        <button class="filter-button" onclick="filterReviews('moisturizer')">
+          Moisturizers
+        </button>
+        <button class="filter-button" onclick="filterReviews('cleanser')">
+          Cleansers
+        </button>
+        <button class="filter-button" onclick="filterReviews('serum')">
+          Serums
+        </button>
+        <button class="filter-button" onclick="filterReviews('toner')">
+          Toners
+        </button>
+        <button class="filter-button" onclick="filterReviews('sunscreen')">
+          Sunscreens
+        </button>
+      </div>
+
+      <div class="product-review" data-type="moisturizer">
+        <h3>HydratePlus Moisturizer</h3>
+        <div class="rating">★★★★☆</div>
+        <p>
+          <strong>Pros:</strong> Lightweight, non-greasy, excellent hydration.
+        </p>
+        <p><strong>Cons:</strong> Slightly expensive.</p>
+        <button
+          style="color: white; background-color: #a5782a86"
+          onclick="toggleDetails(this)"
+        >
+          Details
+        </button>
+        <div class="review-details">
+          <p>
+            This moisturizer is perfect for dry skin. It absorbs quickly and
+            leaves the skin feeling soft and hydrated. However, the price might
+            be a bit high for some users.
+          </p>
+        </div>
+      </div>
+
+      <div class="product-review" data-type="moisturizer">
+        <h3>UltraHydrate Moisturizer</h3>
+        <div class="rating">★★★☆☆</div>
+        <p><strong>Pros:</strong> Affordable, good for everyday use.</p>
+        <p><strong>Cons:</strong> Not as hydrating as premium options.</p>
+        <button
+          style="color: white; background-color: #a5782a86"
+          onclick="toggleDetails(this)"
+        >
+          Details
+        </button>
+        <div class="review-details">
+          <p>
+            This is a budget-friendly moisturizer that works well for everyday
+            use. It provides basic hydration but may not be sufficient for
+            extremely dry skin.
+          </p>
+        </div>
+      </div>
+
+      <div class="product-review" data-type="moisturizer">
+        <h3>MoistureBoost Ultra Cream</h3>
+        <div class="rating">★★★★☆</div>
+        <p><strong>Pros:</strong> Rich formula, great for winter.</p>
+        <p><strong>Cons:</strong> Can feel heavy in warm weather.</p>
+        <button
+          style="color: white; background-color: #a5782a86"
+          onclick="toggleDetails(this)"
+        >
+          Details
+        </button>
+        <div class="review-details">
+          <p>
+            This ultra-rich cream is ideal for winter months. It deeply hydrates
+            and repairs the skin but may feel heavy during warmer seasons.
+          </p>
+        </div>
+      </div>
+
+      <div class="product-review" data-type="cleanser">
+        <h3>PureClean Gel Cleanser</h3>
+        <div class="rating">★★★☆☆</div>
+        <p>
+          <strong>Pros:</strong> Gentle on skin, effective at removing dirt.
+        </p>
+        <p><strong>Cons:</strong> Not suitable for very dry skin.</p>
+        <button
+          style="color: white; background-color: #a5782a86"
+          onclick="toggleDetails(this)"
+        >
+          Details
+        </button>
+        <div class="review-details">
+          <p>
+            This gel cleanser is great for normal to oily skin. It cleans
+            effectively but might not be moisturizing enough for those with dry
+            skin.
+          </p>
+        </div>
+      </div>
+
+      <div class="product-review" data-type="cleanser">
+        <h3>DeepClean Exfoliating Scrub</h3>
+        <div class="rating">★★★★☆</div>
+        <p><strong>Pros:</strong> Exfoliates well, removes dead skin cells.</p>
+        <p><strong>Cons:</strong> Can be abrasive for sensitive skin.</p>
+        <button
+          style="color: white; background-color: #a5782a86"
+          onclick="toggleDetails(this)"
+        >
+          Details
+        </button>
+        <div class="review-details">
+          <p>
+            This scrub is effective for deep cleansing and exfoliating the skin.
+            However, it may be too harsh for those with sensitive skin.
+          </p>
+        </div>
+      </div>
+
+      <div class="product-review" data-type="serum">
+        <h3>GlowBoost Vitamin C Serum</h3>
+        <div class="rating">★★★★★</div>
+        <p><strong>Pros:</strong> Brightens skin, reduces dark spots.</p>
+        <p>
+          <strong>Cons:</strong> Pricey, can cause irritation if used with
+          certain products.
+        </p>
+        <button
+          style="color: white; background-color: #a5782a86"
+          onclick="toggleDetails(this)"
+        >
+          Details
+        </button>
+        <div class="review-details">
+          <p>
+            This serum is excellent for brightening and reducing dark spots. It
+            is a bit expensive, and some users might experience irritation if
+            combined with other active ingredients.
+          </p>
+        </div>
+      </div>
+
+      <div class="product-review" data-type="serum">
+        <h3>HydraGlow Serum</h3>
+        <div class="rating">★★★★☆</div>
+        <p><strong>Pros:</strong> Hydrates and plumps the skin.</p>
+        <p><strong>Cons:</strong> Not suitable for very oily skin.</p>
+        <button
+          style="color: white; background-color: #a5782a86"
+          onclick="toggleDetails(this)"
+        >
+          Details
+        </button>
+        <div class="review-details">
+          <p>
+            This hydrating serum is perfect for adding a glow and plumpness to
+            the skin. However, it might not be ideal for very oily skin types.
+          </p>
+        </div>
+      </div>
+
+      <div class="product-review" data-type="toner">
+        <h3>RefreshToner</h3>
+        <div class="rating">★★★★☆</div>
+        <p><strong>Pros:</strong> Balances skin pH, refreshing.</p>
+        <p>
+          <strong>Cons:</strong> Contains alcohol which may be drying for some.
+        </p>
+        <button
+          style="color: white; background-color: #a5782a86"
+          onclick="toggleDetails(this)"
+        >
+          Details
+        </button>
+        <div class="review-details">
+          <p>
+            This toner helps to balance the skin's pH and leaves it feeling
+            refreshed. However, it contains alcohol which might be drying for
+            sensitive skin types.
+          </p>
+        </div>
+      </div>
+
+      <div class="product-review" data-type="toner">
+        <h3>HydraToner</h3>
+        <div class="rating">★★★☆☆</div>
+        <p><strong>Pros:</strong> Hydrates, gentle formula.</p>
+        <p><strong>Cons:</strong> Less effective at balancing pH.</p>
+        <button
+          style="color: white; background-color: #a5782a86"
+          onclick="toggleDetails(this)"
+        >
+          Details
+        </button>
+        <div class="review-details">
+          <p>
+            This toner provides hydration and has a gentle formula. However, it
+            may not be as effective in balancing the skin's pH levels.
+          </p>
+        </div>
+      </div>
+
+      <div class="product-review" data-type="sunscreen">
+        <h3>SunGuard SPF 50</h3>
+        <div class="rating">★★★★☆</div>
+        <p><strong>Pros:</strong> High SPF, non-greasy.</p>
+        <p><strong>Cons:</strong> Leaves a slight white cast.</p>
+        <button
+          style="color: white; background-color: #a5782a86"
+          onclick="toggleDetails(this)"
+        >
+          Details
+        </button>
+        <div class="review-details">
+          <p>
+            This sunscreen provides excellent sun protection with a high SPF. It
+            is non-greasy but may leave a slight white cast on the skin.
+          </p>
+        </div>
+      </div>
+
+      <div class="product-review" data-type="sunscreen">
+        <h3>BrightShield SPF 30</h3>
+        <div class="rating">★★★☆☆</div>
+        <p><strong>Pros:</strong> Lightweight, good for daily use.</p>
+        <p><strong>Cons:</strong> Lower SPF compared to other options.</p>
+        <button
+          style="color: white; background-color: #a5782a86"
+          onclick="toggleDetails(this)"
+        >
+          Details
+        </button>
+        <div class="review-details">
+          <p>
+            This sunscreen is lightweight and suitable for daily wear. However,
+            it offers less protection compared to higher SPF products.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p><b>&copy; 2024 PureSkin. All rights reserved.</b></p>
+    </footer>
+
+    <script>
+      function toggleDetails(button) {
+        const details = button.nextElementSibling;
+        if (details.classList.contains("show")) {
+          details.classList.remove("show");
+          button.textContent = "Details";
+        } else {
+          details.classList.add("show");
+          button.textContent = "Hide Details";
+        }
+      }
+
+      function filterReviews(type) {
+        const reviews = document.querySelectorAll(".product-review");
+        reviews.forEach((review) => {
+          if (type === "all" || review.getAttribute("data-type") === type) {
+            review.style.display = "block";
+          } else {
+            review.style.display = "none";
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
