@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PureSkin</title>
+    <style>
+
+      body {
+        background-color: #dbb799;
+        color: #5a3c2d;
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+      }
+
+      header {
+        background-color: #c69f88;
+        color: #000;
+        text-align: center;
+        border-bottom: 3px solid #ca9378;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        position: relative;
+        padding: 0px;
+        max-height: 70px;
+      }
+
+      header img {
+        height: 100px;
+        width: 100px;
+        mix-blend-mode: multiply;
+      }
+
+      nav {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+      }
+
+      .navbar {
+        position: relative;
+      }
+
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: #d5bda8;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        border-radius: 5px;
+        width: 200px;
+        padding: 0;
+      }
+
+      .dropdown-content a {
+        color: #5a3c2d;
+        text-decoration: none;
+        display: block;
+        padding: 12px 16px;
+        transition: background-color 0.3s, color 0.3s;
+        border-bottom: 1px solid #c69c84; /
+      }
+
+      .dropdown-content a:hover {
+        background-color: #a9786e;
+        color: #fff;
+      }
+
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+
+      .dropdown-button {
+        background-color: #a57258;
+        border: none;
+        color: #ffffff;
+        padding: 12px 20px;
+        font-size: 1em;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s, box-shadow 0.3s;
+        position: absolute;
+        top: -25px;
+        right: -8px;
+      }
+
+      .dropdown-button:hover {
+        background-color: #cca086;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      main {
+        padding: 10px;
+        text-align: center;
+        background-color: #f4c8a2;
+        color: #5a3c2d;
+        margin-bottom: 40px;
+      }
+
+      main h2 {
+        color: #5a3c2d;
+        font-size: 2.5em;
+        margin-top: 0;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+      }
+
+      main p {
+        max-width: 700px;
+        max-height: 500px;
+        margin: 20px auto;
+        font-size: 1.2em;
+        line-height: 1.8;
+        color: #7f5044;
+        background-color: #eab9a085;
+        padding: 20px;
+        border-radius: 30px;
+        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+      }
+      main {
+        padding: 20px;
+        text-align: center;
+      }
+
+      .slider {
+        position: relative;
+        max-width: 450px;
+        margin: auto;
+        overflow: hidden;
+        border-radius: 10px;
+        background: #967264;
+        border: solid;
+      }
+
+      .slides {
+        display: flex;
+        transition: transform 0.5s ease;
+      }
+
+      .slide {
+        min-width: 100%;
+        text-align: center;
+      }
+
+      img {
+        width: 80%;
+        border-radius: 10px;
+        margin: 20px auto;
+        display: block;
+      }
+
+      .caption {
+        margin-top: 10px;
+        font-size: 1.2em;
+        color: #d1cec8;
+      }
+
+      .description {
+        margin-top: 5px;
+        font-size: 1em;
+        color: #d3d3d3;
+        max-width: 350px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .nav-buttons {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        transform: translateY(-50%);
+      }
+
+      .nav-button {
+        background-color: rgba(148, 125, 98, 0.568);
+        border: none;
+        color: white;
+        padding: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+
+      .side-decoration {
+        position: absolute;
+        top: 50%;
+        width: 90px;
+        height: 100px;
+        background: rgb(214, 190, 158);
+        border-radius: 50%;
+      }
+
+      .left-decoration {
+        left: -50px;
+        transform: translateY(-50%);
+      }
+
+      .right-decoration {
+        right: -50px;
+        transform: translateY(-50%);
+      }
+
+      footer {
+        background-color: #c69c84;
+        color: #5a3c2d;
+        text-align: center;
+        padding: 20px;
+        border-top: 3px solid #d2aa97;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      footer p {
+        margin: 0;
+        font-size: 0.9em;
+      }
+
+      @media (max-width: 768px) {
+        header img {
+          height: 80px;
+          width: 80px;
+        }
+
+        .dropdown-button {
+          padding: 10px 15px;
+        }
+
+        main h2 {
+          font-size: 2em;
+        }
+
+        main p {
+          font-size: 1em;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <img
+        src="pureskinlogo.jpg"
+        style="
+          height: 55px;
+          width: 55px;
+          position: absolute;
+          top: -10px;
+          left: 2px;
+          mix-blend-mode: multiply;
+        "
+      />
+      <img
+        src="pureskintg.jpg"
+        style="
+          height: 180px;
+          width: 180px;
+          position: relative;
+          top: -45px;
+          mix-blend-mode: multiply;
+        "
+      />
+      <nav>
+        <div class="dropdown">
+          <button class="dropdown-button">Menu</button>
+          <div class="dropdown-content">
+            <a
+              href="login.html"
+              style="
+                color: rgba(220, 185, 155, 0.808);
+                background-color: #695046;
+              "
+              >Login</a
+            >
+            <a
+              href="signup.html"
+              style="
+                color: rgba(240, 212, 159, 0.664);
+                background-color: #967264;
+              "
+              >Signup</a
+            >
+            <a href="Routine.html" style="background-color: #c39582"
+              >Natural Skincare</a
+            >
+            <a href="product review.html" style="background-color: #d2a18cd3"
+              >Products-review</a
+            >
+            <a href="Skin analysis.html" style="background-color: #d8ac9bba"
+              >Skin Analysis</a
+            >
+
+            <a href="learnmore.html" style="background-color: #f9ceb7"
+              >Learn More</a
+            >
+            <a href="contactus.html" style="background-color: #f6d8c6"
+              >Contact Us</a
+            >
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <body>
+      <video
+        width="1700"
+        height="800"
+        autoplay
+        loop
+        muted
+        style="
+          position: relative;
+          left: -100px;
+          width: 1800px;
+          height: auto;
+          overflow: hidden;
+        "
+      >
+        <source src="Your skin. Our planet. .mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </body>
+
+    <main>
+      <h2>Connect Through Clear Skin</h2>
+      <p>
+        <b>Discover Your Perfect Skincare Routine! 🌟</b><br />
+        Finding the right skincare products can be overwhelming, but we’re here
+        to help! With just a few simple questions, our expert-powered system
+        will analyze your skin type, concerns, and routine to create a tailored
+        skincare plan just for you. Whether you’re battling acne, dryness, or
+        looking for that radiant glow, we’ve got the perfect solutions!<br />
+        <span style="display: block; text-align: left">
+          🧴 Personalized Product Recommendations<br />
+          💬 Expert Advice<br />
+          🥗 Lifestyle Tips for Healthy Skin<br />
+          💰 Budget-Friendly Options<br />
+        </span>
+        Say goodbye to guesswork and hello to glowing, healthy skin!<br />
+        <b>Start your journey to better skin today!</b>
+      </p>
+    </main>
+    <script>
+      window.embeddedChatbotConfig = {
+        chatbotId: "tBGOHGCuO4dNVtfAuwJAT",
+        domain: "www.chatbase.co",
+      };
+    </script>
+    // <script
+    //   src="https://www.chatbase.co/embed.min.js"
+    //   chatbotId="tBGOHGCuO4dNVtfAuwJAT"
+    //   domain="www.chatbase.co"
+    //   defer
+    // ></script>
+    <footer>
+      <p><b>&copy; 2024 PureSkin. All rights reserved.</b></p>
+    </footer>
+  </body>
+</html>

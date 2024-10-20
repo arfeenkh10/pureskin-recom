@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skin Recommendation Chatbot</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #f0e6d6;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        margin: 0;
+      }
+      header {
+        background-color: #c49f68;
+        color: white;
+        text-align: center;
+        padding: 10px 0;
+        font-size: 29px;
+        position: relative;
+      }
+      .back-button {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        background-color: #7e5c2956;
+      }
+      .chat-container {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+      .chat-box {
+        width: 100%;
+        max-width: 800px;
+        height: 400px;
+        overflow-y: auto;
+        padding: 10px;
+        background-color: #fff3e6;
+        border: 1px solid #d1b5a1;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      }
+      .chat-input {
+        display: flex;
+        margin-top: 10px;
+      }
+      .chat-input input {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
+        border: 1px solid #d1b5a1;
+        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      .chat-input button {
+        padding: 10px;
+        border: none;
+        background-color: #d6be8d;
+        color: white;
+        cursor: pointer;
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+        transition: background-color 0.3s;
+      }
+      .chat-input button:hover {
+        background-color: #bd9967;
+      }
+      .chat-box div {
+        margin: 5px 0;
+        padding: 8px;
+        border-radius: 10px;
+      }
+      .chat-box .user {
+        background-color: #d1f7d8;
+        align-self: flex-end;
+        text-align: right;
+      }
+      .chat-box .bot {
+        background-color: #e3f2fd;
+        align-self: flex-start;
+        text-align: left;
+      }
+
+      .marquee {
+        width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        box-sizing: border-box;
+        background-color: #b18646;
+        color: white;
+        padding: 10px 0;
+        font-family: "Times New Roman", Times, serif;
+      }
+      .marquee-content {
+        display: inline-block;
+        padding-left: 100%;
+        animation: marquee 35s linear infinite;
+      }
+      @keyframes marquee {
+        0% {
+          transform: translate(0, 0);
+        }
+        100% {
+          transform: translate(-100%, 0);
+        }
+      }
+      footer {
+        background-color: #c2a96b;
+        color: white;
+        text-align: center;
+        padding: 10px 0;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <button class="btn btn-secondary back-button" onclick="goBack()">
+        Back
+      </button>
+      <strong
+        style="
+          font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+            'Lucida Sans', Arial, sans-serif;
+        "
+        >PureSkin Chatbot</strong
+      >
+    </header>
+
+    <body>
+      <div class="marquee">
+        <div class="marquee-content">
+          Welcome to the Skin Care Chatbot! Currently, we can provide limited
+          information on various skincare concerns. Our team is dedicated to
+          improving our recommendations, and we appreciate your patience as we
+          work to better assist you. Your journey to healthier skin starts here!
+        </div>
+      </div>
+    </body>
+    <div class="container mt-3 flex-fill">
+      <div class="chat-container">
+        <div class="chat-box" id="chat-box"></div>
+      </div>
+      <div class="chat-input">
+        <input
+          type="text"
+          id="user-input"
+          class="form-control"
+          placeholder="Ask me about skincare..."
+        />
+        <button class="btn btn-primary" onclick="sendMessage()">Send</button>
+      </div>
+    </div>
+
+    <footer><b>&copy; 2024 PureSkin. All Rights Reserved.</b></footer>
+
+    <script>
+      function sendMessage() {
+        const input = document.getElementById("user-input");
+        const chatBox = document.getElementById("chat-box");
+
+        const userMessage = input.value;
+        if (userMessage.trim() === "") return;
+
+        chatBox.innerHTML += `<div class="user">User: ${userMessage}</div>`;
+        input.value = "";
+
+        const botResponse = getBotResponse(userMessage);
+        chatBox.innerHTML += `<div class="bot">Bot: ${botResponse}</div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }
+
+      function getBotResponse(message) {
+        const lowerMessage = message.toLowerCase();
+
+        if (lowerMessage.includes("dry skin")) {
+          return "For dry skin, I recommend using a hydrating moisturizer with hyaluronic acid. Look for creams that contain ingredients like glycerin and ceramides to help lock in moisture. Additionally, consider using a gentle exfoliating product once a week to remove dead skin cells, as this can enhance the absorption of moisturizers. Including a humidifier in your living space can also help maintain moisture levels in the skin.";
+        } else if (lowerMessage.includes("oily skin")) {
+          return "For oily skin, try a lightweight, oil-free moisturizer. Gel-based moisturizers are great choices, as they hydrate without adding excess oil. Use products with niacinamide or salicylic acid to help control oil production and minimize the appearance of pores. Incorporating a clay mask once a week can also help absorb excess oil and reduce shine.";
+        } else if (lowerMessage.includes("sensitive skin")) {
+          return "For sensitive skin, look for products with soothing ingredients like aloe vera, chamomile, and calendula. It's essential to use fragrance-free and hypoallergenic products to minimize irritation. Patch testing new products is also advisable to ensure they don't cause a reaction. You may also want to avoid hot water when washing your face, as it can exacerbate sensitivity.";
+        } else if (lowerMessage.includes("acne")) {
+          return "For acne-prone skin, consider using products with salicylic acid or benzoyl peroxide to help treat and prevent breakouts. Non-comedogenic moisturizers are crucial, as they won’t clog pores. Incorporating a gentle exfoliating routine with products containing alpha-hydroxy acids (AHAs) can also help improve skin texture. A balanced diet rich in omega-3 fatty acids may further support skin health.";
+        } else if (lowerMessage.includes("combination skin")) {
+          return "For combination skin, it’s essential to balance both dry and oily areas. Use a lightweight moisturizer in the T-zone and a richer cream on drier areas. Products with a mix of hydrating and oil-controlling ingredients, like hyaluronic acid and niacinamide, can work wonders. Regular exfoliation can help to prevent clogged pores in oily areas.";
+        } else if (lowerMessage.includes("aging skin")) {
+          return "For aging skin, focus on products that promote collagen production. Look for serums with retinol, peptides, or vitamin C to help reduce fine lines and improve skin texture. Regular use of sunscreen is crucial to protect against further aging caused by UV exposure. Incorporating antioxidants in your skincare routine can also help combat free radical damage.";
+        } else if (lowerMessage.includes("hyperpigmentation")) {
+          return "For hyperpigmentation, consider using products with ingredients like vitamin C, kojic acid, or niacinamide, which can help brighten the skin and reduce dark spots. Exfoliating regularly with AHAs or BHAs can also aid in skin cell turnover and lighten pigmentation. Always apply sunscreen during the day, as UV exposure can worsen hyperpigmentation.";
+        } else if (lowerMessage.includes("rosacea")) {
+          return "For rosacea, it’s best to use gentle, anti-inflammatory products. Look for formulations containing niacinamide or green tea extract, which can help soothe redness. Avoid harsh scrubs and products with alcohol or strong fragrances. Keeping a skincare diary may help you identify triggers for your rosacea flare-ups.";
+        } else if (lowerMessage.includes("eczema")) {
+          return "For eczema, use thick, emollient creams or ointments containing ingredients like ceramides or colloidal oatmeal. These can help restore the skin barrier and retain moisture. It’s also vital to avoid triggers and use gentle, fragrance-free products. Taking lukewarm baths followed by immediate moisturizing can help soothe dry skin.";
+        } else if (lowerMessage.includes("psoriasis")) {
+          return "For psoriasis, look for hydrating lotions and topical treatments containing salicylic acid or coal tar. Moisturizing regularly is critical to managing symptoms and reducing flare-ups. Consult a dermatologist for more advanced treatment options, such as phototherapy or systemic medications. Stress management techniques may also help reduce flare-ups.";
+        } else if (lowerMessage.includes("sunburn")) {
+          return "For sunburn, it's crucial to cool the skin with cold compresses or aloe vera gel. Staying hydrated is essential, and applying a gentle, fragrance-free moisturizer can help soothe the skin. Avoid further sun exposure until the skin has healed. If the burn is severe or blisters develop, consult a healthcare professional.";
+        } else if (lowerMessage.includes("dark circles")) {
+          return "For dark circles, consider using an eye cream with ingredients like caffeine or vitamin K to reduce puffiness and dark pigmentation. Getting adequate sleep and staying hydrated can also help. Regular application of sunscreen around the eyes is essential to prevent further darkening.";
+        } else if (lowerMessage.includes("dull skin")) {
+          return "For dull skin, incorporate exfoliation into your routine using gentle scrubs or chemical exfoliants containing AHAs or BHAs. Using a brightening serum with vitamin C can also help improve skin radiance. Ensure to keep your skin well-hydrated and use a moisturizer that suits your skin type.";
+        } else if (lowerMessage.includes("puffy eyes")) {
+          return "For puffy eyes, cold compresses can help reduce swelling. Look for eye creams that contain caffeine to help constrict blood vessels and reduce puffiness. Getting enough sleep and minimizing salt intake can also prevent water retention around the eyes.";
+        } else if (lowerMessage.includes("blackheads")) {
+          return "For blackheads, consider using a gentle exfoliating scrub or a chemical exfoliant containing salicylic acid to unclog pores. Clay masks can also help draw out impurities. Always follow up with a non-comedogenic moisturizer to keep the skin hydrated.";
+        } else if (lowerMessage.includes("whiteheads")) {
+          return "For whiteheads, use non-comedogenic products and incorporate exfoliation into your routine to help clear clogged pores. Topical treatments with benzoyl peroxide or salicylic acid can also be effective in treating whiteheads. Regular cleansing is essential.";
+        } else if (lowerMessage.includes("ingrown hairs")) {
+          return "For ingrown hairs, exfoliating regularly can help prevent hairs from becoming trapped. Use gentle scrubs or chemical exfoliants. After shaving, consider using soothing products like tea tree oil or salicylic acid to reduce inflammation.";
+        } else if (lowerMessage.includes("chapped lips")) {
+          return "For chapped lips, use a hydrating lip balm that contains ingredients like shea butter or beeswax. Avoid licking your lips, as this can worsen dryness. Drinking plenty of water and using a humidifier can also help keep lips moisturized.";
+        } else if (lowerMessage.includes("pore size")) {
+          return "To minimize the appearance of pores, use products containing niacinamide or retinol. Regular exfoliation can help prevent clogged pores. Incorporating a clay mask into your routine can also help absorb excess oil and tighten the skin.";
+        } else {
+          return "I'm sorry, I can only provide recommendations for dry, oily, sensitive skin, acne, combination skin, aging skin, hyperpigmentation, rosacea, eczema, psoriasis, sunburn, dark circles, dull skin, puffy eyes, blackheads, whiteheads, ingrown hairs, chapped lips, and pore size.";
+        }
+      }
+
+      function goBack() {
+        window.history.back();
+      }
+    </script>
+  </body>
+</html>

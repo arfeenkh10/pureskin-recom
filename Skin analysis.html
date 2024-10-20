@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skin Analysis</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2e0d5; /* Skin tone color */
+        color: #333;
+        margin: 0;
+        padding: 0;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        background-color: #d0b99e; /* Skin tone color */
+      }
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+      }
+      .back-button {
+        padding: 10px 15px;
+        border: none;
+        background-color: #8e735b;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+      .container {
+        padding: 20px;
+      }
+      form {
+        margin-bottom: 20px;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      select {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+      }
+      button {
+        padding: 10px 15px;
+        background-color: #8e735b;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      #result {
+        display: none;
+        margin-top: 20px;
+      }
+      canvas {
+        margin-top: 20px;
+        border: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">PureSkin</div>
+      <button class="back-button" onclick="goBack()">Back</button>
+    </header>
+    <div class="container">
+      <h1>Skin Analysis</h1>
+      <form id="skinForm">
+        <label for="skinType">Question 1: Your skin type?</label>
+        <select name="skinType" required>
+          <option value="">Select your skin type</option>
+          <option value="dry">Dry</option>
+          <option value="oily">Oily</option>
+          <option value="combination">Combination</option>
+        </select>
+
+        <label for="sensitivity">Question 2: Is your skin sensitive?</label>
+        <select name="sensitivity" required>
+          <option value="">Select</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+
+        <label for="acne">Question 3: Do you experience acne?</label>
+        <select name="acne" required>
+          <option value="">Select</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+
+        <label for="dryness">Question 4: Does your skin feel dry?</label>
+        <select name="dryness" required>
+          <option value="">Select</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+
+        <label for="sunExposure">Question 5: Do you often get sunburned?</label>
+        <select name="sunExposure" required>
+          <option value="">Select</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+
+        <label for="moisturizer"
+          >Question 6: Do you use moisturizer regularly?</label
+        >
+        <select name="moisturizer" required>
+          <option value="">Select</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+
+        <label for="makeup">Question 7: Do you wear makeup daily?</label>
+        <select name="makeup" required>
+          <option value="">Select</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+
+        <label for="exposure"
+          >Question 8: Are you frequently exposed to pollution?</label
+        >
+        <select name="exposure" required>
+          <option value="">Select</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+
+        <label for="waterIntake"
+          >Question 9: Do you drink plenty of water daily?</label
+        >
+        <select name="waterIntake" required>
+          <option value="">Select</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+
+        <label for="diet">Question 10: Do you follow a healthy diet?</label>
+        <select name="diet" required>
+          <option value="">Select</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+
+        <button type="submit">Submit</button>
+      </form>
+      <div id="result">
+        <h2>Your Results</h2>
+        <p id="resultText"></p>
+        <canvas id="resultChart" width="400" height="200"></canvas>
+      </div>
+    </div>
+
+    <script>
+      function goBack() {
+        window.history.back();
+      }
+
+      document
+        .getElementById("skinForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          // Calculate results based on user input
+          const skinType = event.target.skinType.value;
+          const sensitivity = event.target.sensitivity.value;
+          const acne = event.target.acne.value;
+          const dryness = event.target.dryness.value;
+          const sunExposure = event.target.sunExposure.value;
+          const moisturizer = event.target.moisturizer.value;
+          const makeup = event.target.makeup.value;
+          const exposure = event.target.exposure.value;
+          const waterIntake = event.target.waterIntake.value;
+          const diet = event.target.diet.value;
+
+          let skinData = {
+            Dry: 0,
+            Oily: 0,
+            Combination: 0,
+            Sensitive: 0,
+            Acne: 0,
+            Dryness: 0,
+            "Sun Exposure": 0,
+            Moisturizer: 0,
+            Makeup: 0,
+            "Pollution Exposure": 0,
+            "Water Intake": 0,
+            "Healthy Diet": 0,
+          };
+
+          // Increment skin type scores
+          skinData[skinType.charAt(0).toUpperCase() + skinType.slice(1)] += 1;
+          if (sensitivity === "yes") skinData["Sensitive"] += 1;
+          if (acne === "yes") skinData["Acne"] += 1;
+          if (dryness === "yes") skinData["Dryness"] += 1;
+          if (sunExposure === "yes") skinData["Sun Exposure"] += 1;
+          if (moisturizer === "yes") skinData["Moisturizer"] += 1;
+          if (makeup === "yes") skinData["Makeup"] += 1;
+          if (exposure === "yes") skinData["Pollution Exposure"] += 1;
+          if (waterIntake === "yes") skinData["Water Intake"] += 1;
+          if (diet === "yes") skinData["Healthy Diet"] += 1;
+
+          // Determine skin type summary
+          let summary = "";
+          if (
+            skinData["Dry"] > skinData["Oily"] &&
+            skinData["Dry"] > skinData["Combination"]
+          ) {
+            summary =
+              "Your skin is primarily dry, which may need more hydration.";
+          } else if (
+            skinData["Oily"] > skinData["Dry"] &&
+            skinData["Oily"] > skinData["Combination"]
+          ) {
+            summary =
+              "Your skin is primarily oily, requiring proper cleansing.";
+          } else if (
+            skinData["Combination"] > skinData["Dry"] &&
+            skinData["Combination"] > skinData["Oily"]
+          ) {
+            summary = "Your skin is combination, needing balanced care.";
+          } else {
+            summary =
+              "Your skin type is unclear, consider consulting a dermatologist.";
+          }
+
+          // Show result
+          document.getElementById("resultText").innerText = summary;
+          document.getElementById("result").style.display = "block";
+
+          // Create a bar chart
+          const ctx = document.getElementById("resultChart").getContext("2d");
+          const resultChart = new Chart(ctx, {
+            type: "bar",
+            data: {
+              labels: Object.keys(skinData),
+              datasets: [
+                {
+                  label: "Skin Type Scores",
+                  data: Object.values(skinData),
+                  backgroundColor: [
+                    "#FF6384",
+                    "#36A2EB",
+                    "#FFCE56",
+                    "#FF9F40",
+                    "#4BC0C0",
+                    "#9966FF",
+                    "#FF6384",
+                    "#FF9F40",
+                    "#36A2EB",
+                    "#4BC0C0",
+                    "#9966FF",
+                  ],
+                  borderColor: [
+                    "#FF6384",
+                    "#36A2EB",
+                    "#FFCE56",
+                    "#FF9F40",
+                    "#4BC0C0",
+                    "#9966FF",
+                    "#FF6384",
+                    "#FF9F40",
+                    "#36A2EB",
+                    "#4BC0C0",
+                    "#9966FF",
+                  ],
+                  borderWidth: 1,
+                },
+              ],
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true,
+                },
+              },
+            },
+          });
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skin Type Analysis Result</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="text-center">Your Skin Type: {{ skin_type }}</h1>
+      <canvas id="skinTypeChart" width="400" height="200"></canvas>
+    </div>
+
+    <script>
+      var ctx = document.getElementById('skinTypeChart').getContext('2d');
+      var skinScore = {{ skin_score | tojson }};
+      var chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: Object.keys(skinScore),
+          datasets: [{
+            label: 'Skin Type Score',
+            data: Object.values(skinScore),
+            backgroundColor: [
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)'
+            ],
+            borderColor: [
+              'rgba(75, 192, 192, 1)',
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
