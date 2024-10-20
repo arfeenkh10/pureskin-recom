@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather and Skincare Advice</title>
+    <style>
+        /* General Styles */
+        body {
+          background-color: #f9dcc4; /* Soft skin tone background */
+          color: #5a3c2d; /* Darker, warm text color */
+          font-family: "Arial", sans-serif;
+          margin: 0;
+          padding: 0;
+          line-height: 1.6;
+        }
+  
+        /* Header Section */
+        header {
+          background-color: #f5b895; /* Light peach tone */
+          color: #000; /* Black text color */
+          text-align: center;
+          border-bottom: 3px solid #d99572; /* Slightly darker border */
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+  
+        header h1 {
+          margin: 0;
+          font-size: 2.5em; /* Adjusted font size */
+          font-weight: 700;
+          color: #000; /* Black color for text */
+          text-shadow: none; /* Removed shadow */
+        }
+  
+        header img {
+          display: block;
+          margin: 0 auto; /* Centering the image */
+          height: 100px; /* Adjusted size */
+          width: 100px; /* Adjusted size */
+          background: none; /* Removed background */
+        }
+  
+        /* Navbar Styling */
+        nav ul {
+          list-style-type: none;
+          padding: 15px;
+          margin: 0;
+          display: flex;
+          justify-content: center;
+          background: #7f5044; /* Richer brown tone */
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+        }
+  
+        nav ul li {
+          margin: 0 15px; /* Adjusted margin */
+        }
+  
+        nav ul li a {
+          color: #f5f5f5; /* Light text color */
+          text-decoration: none;
+          font-size: 1em; /* Adjusted font size */
+          font-weight: bold;
+          padding: 8px 25px; /* Adjusted padding */
+          background-color: #d99572; /* Warm peach tone */
+          border-radius: 5px;
+          transition: color 0.3s, background-color 0.3s;
+        }
+  
+        nav ul li a:hover {
+          background-color: #c48763; /* Darker hover */
+          color: #ffffff;
+          box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2); /* Added hover shadow */
+        }
+  
+        /* Main Section */
+        main {
+          padding: 40px;
+          text-align: center;
+          background-color: #f4c8a2; /* Lighter, warmer background */
+          color: #5a3c2d; /* Text color for contrast */
+          margin-bottom: 60px; /* Reduced space for the footer */
+        }
+  
+        main h2 {
+          color: #5a3c2d; /* Warm, earthy text color */
+          font-size: 2.5em;
+          margin-top: 0;
+          text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+  
+        main p {
+          max-width: 700px;
+          max-height: 500px;
+          margin: 20px auto;
+          font-size: 1.2em;
+          line-height: 1.8;
+          color: #7f5044; /* Slightly darker text */
+          background-color: #f9dcc4;
+          padding: 20px;
+          border-radius: 30px;
+          box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+  
+        /* Footer Section */
+        footer {
+          background-color: #f5b895; /* Same tone as header for consistency */
+          color: #5a3c2d; /* Matching text color */
+          text-align: center;
+          padding: 20px;
+          border-top: 3px solid #d99572;
+          position: fixed;
+          bottom: 0;
+          width: 100%;
+          box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.1);
+        }
+  
+        footer p {
+          margin: 0;
+          font-size: 0.9em;
+        }
+  
+        /* Responsive Design */
+        @media (max-width: 768px) {
+          header h1 {
+            font-size: 2em; /* Adjusted font size for smaller screens */
+          }
+  
+          nav ul li {
+            margin: 0 10px; /* Adjusted margin for smaller screens */
+          }
+  
+          nav ul li a {
+            padding: 8px 10px; /* Adjusted padding for smaller screens */
+          }
+  
+          main h2 {
+            font-size: 2em; /* Adjusted font size for smaller screens */
+          }
+  
+          main p {
+            font-size: 1em; /* Adjusted font size for smaller screens */
+          }
+        }
+      </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Get Skincare Advice Based on Weather</h1>
+        <form id="weather-form">
+            <label for="city">Enter City:</label>
+            <input type="text" id="city" name="city" required>
+            <button type="submit">Get Advice</button>
+        </form>
+
+        <div class="result" id="result">
+            <!-- Weather and advice will appear here -->
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('weather-form').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent the form from refreshing the page
+            const city = document.getElementById('city').value;
+
+            // Send a POST request to the Flask server
+            fetch('/get_skincare_advice', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ city: city })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('result').innerHTML = `<p>${data.error}</p>`;
+                } else {
+                    const weather = data.weather.main;
+                    const advice = data.advice;
+                    const city = data.weather.name;
+                    const temp = weather.temp;
+                    const humidity = weather.humidity;
+                    const condition = data.weather.weather[0].main;
+
+                    document.getElementById('result').innerHTML = `
+                        <h3>Weather in ${city}</h3>
+                        <p>Temperature: ${temp}°C</p>
+                        <p>Humidity: ${humidity}%</p>
+                        <p>Condition: ${condition}</p>
+                        <h3>Skincare Advice</h3>
+                        <p>${advice}</p>
+                    `;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('result').innerHTML = `<p>Something went wrong!</p>`;
+            });
+        });
+    </script>
+</body>
+</html>
